@@ -20,29 +20,25 @@ public abstract class UpdatableApplication extends Application {
         UpdateService updateService = new UpdateService();
 
         Manifest local = updateService.readLocalManifest();
+        Manifest remote = updateService.downloadManifest(local.getRemoteManifestPath());
+        Update update = updateService.checkForUpdates(remote, local);
+        if (update.available) {
 
-        if (local != null) {
-            Manifest remote = updateService.downloadManifest(local.getRemoteManifestPath());
-            if (remote != null) {
-                Update update = updateService.checkForUpdates(remote, local);
+            System.out.println("Update is available!");
+            //TODO: add logic for use of a custom update window.
+            try {
+                FXMLLoader loader = new FXMLLoader(UpdateCtrl.class.getResource("update.fxml"));
+                UpdateCtrl ctrl = new UpdateCtrl();
+                loader.setController(ctrl);
+                overrideRoot = loader.load();
 
-                if (update.available) {
-                    System.out.println("Update is available!");
-
-                    try {
-                        FXMLLoader loader = new FXMLLoader(UpdateCtrl.class.getResource("update.fxml"));
-                        UpdateCtrl ctrl = new UpdateCtrl();
-                        loader.setController(ctrl);
-
-                        overrideRoot = loader.load();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
+
+
 
     @Override
     public void start(Stage stage) throws Exception {

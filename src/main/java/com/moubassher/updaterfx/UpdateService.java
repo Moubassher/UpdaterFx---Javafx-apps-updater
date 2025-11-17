@@ -130,7 +130,11 @@ public class UpdateService {
     }
 
     private boolean isUpdateAvailable(Manifest remoteManifest, Manifest localManifest) {
-        return remoteManifest.getReleaseTime().isAfter(localManifest.getReleaseTime());
+        return isManifestFilesExist(localManifest, remoteManifest) && remoteManifest.getReleaseTime().isAfter(localManifest.getReleaseTime());
+    }
+
+    private boolean isManifestFilesExist(Manifest local, Manifest remote) {
+        return local != null && remote != null;
     }
 
 }
