@@ -9,9 +9,9 @@ Plus, there's the native executable created, with AOT provided by GraalVM, which
 
 However, one thing I haven't found enough discussion about is the streamlining of the update process of javaFX programs. And so, I have never been satisfied with the first method of packaging JavaFX programs. Because unless your program was so feature-complete it would never need an update till the end of times, you have to have a better way of letting users get updates to your program in small patches, and as soon as they come out or else, it would be a horrible User Experience!
 
-More and more desktop apps, e.g. VS Code, Chrome, Github Desktop, and most modern desktop programs started having these streamlined update techniques that are so non-intrusive, they just notify you the updates will download in the background and will be applied automatically with the next run of the program.
+More and more desktop apps, e.g. VS Code, Chrome, GitHub Desktop, and most modern desktop programs started having these streamlined update techniques that are so non-intrusive, they just notify you the updates will download in the background and will be applied automatically with the next run of the program.
 
-One repo that had potential to provide this functionality was Update4j (https://github.com/update4j/update4j). But I say "had" because it's a public archive now with an API that didn't work out very well, and in the abscence of maintainers, I had to just implement a solution from scratch.
+One repo that had potential to provide this functionality was Update4j (https://github.com/update4j/update4j). But I say "had" because it's a public archive now with an API that didn't work out very well, and in the absence of maintainers, I had to just implement a solution from scratch.
 I have endeavored to create this CRUCIAL feature/experience through this repository along with a gradle plugin I wrote (https://github.com/Moubassher/release-manifest-plugin).
 
 <h3>How it works</h3>

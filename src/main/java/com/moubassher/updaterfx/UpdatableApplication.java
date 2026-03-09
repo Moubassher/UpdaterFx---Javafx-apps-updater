@@ -12,6 +12,14 @@ public abstract class UpdatableApplication extends Application {
 
     private Pane overrideRoot;
 
+
+    /**
+     * A method for plugging in your custom Update UI. Leave empty if you'd like to
+     * use the default UI.
+     *
+     */
+    protected abstract UpdateUI createUpdateUI();
+
     protected abstract void showMainWindow(Stage stage) throws Exception;
 
     @Override
@@ -23,21 +31,27 @@ public abstract class UpdatableApplication extends Application {
         Manifest remote = updateService.downloadManifest(local.getRemoteManifestPath());
         Update update = updateService.checkForUpdates(remote, local);
         if (update.available) {
-
-            System.out.println("Update is available!");
-            //TODO: add logic for use of a custom update window.
-            try {
-                FXMLLoader loader = new FXMLLoader(UpdateCtrl.class.getResource("update.fxml"));
-                UpdateCtrl ctrl = new UpdateCtrl();
-                loader.setController(ctrl);
-                overrideRoot = loader.load();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            UpdateUI updateUI = createUpdateUI();
+            if(updateUI != null) {
+                overrideRoot = updateUI.getRoot();
+            } else {    //use default Update UI:
+                overrideRoot = loadDefaultUpdateUI();
             }
         }
     }
 
+    private Pane loadDefaultUpdateUI() {
+        FXMLLoader loader = new FXMLLoader(UpdateCtrl.class.getResource("update.fxml"));
+        UpdateCtrl ctrl = new UpdateCtrl();
+        loader.setController(ctrl);
+        Pane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return pane;
+    }
 
 
     @Override

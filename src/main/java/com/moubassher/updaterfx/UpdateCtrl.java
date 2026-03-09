@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +19,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-public class UpdateCtrl implements Initializable {
+public class UpdateCtrl implements Initializable, UpdateUI {
+
+    @FXML
+    private VBox root;
 
     @FXML
     private ProgressBar progressBar;
@@ -95,5 +100,30 @@ public class UpdateCtrl implements Initializable {
     private void applyUpdateUI() {
         // Example usage:
         // applyUpdate(update, remoteManifest, exeDir, progressBar::setProgress);
+    }
+
+    @Override
+    public Pane getRoot() {
+        return root;
+    }
+
+    @Override
+    public void downloadUpdateInBackground(Update update) {
+
+    }
+
+    @Override
+    public void downloadDirect(Update update) {
+
+    }
+
+    @Override
+    public void remindLater(Update update) {
+
+    }
+
+    @Override
+    public double getProgress() {
+        return 0;
     }
 }
